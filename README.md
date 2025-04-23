@@ -1,2 +1,2 @@
 # DevOPS_Avance
-Temporal
+Esta sera una tienda en linea de Panini donde venderemos Comics para todo publico
