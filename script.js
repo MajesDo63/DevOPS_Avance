@@ -38,9 +38,14 @@ const productos = [
       const subtotal = cantidad * p.precio;
       total += subtotal;
   
-      const item = document.createElement("p");
-      item.innerHTML = `${p.nombre} x ${cantidad} = $${subtotal.toFixed(2)}
-        <button onclick="quitarCarrito(${id})" style="margin-left:10px;">X</button>`;
+      const item = document.createElement("div");
+      item.className = "carrito-item";
+      item.innerHTML = `
+        <span>${p.nombre}</span>
+        <input type="number" min="1" value="${cantidad}" onchange="cambiarCantidad(${id}, this.value)" style="width: 50px; margin: 0 10px;">
+        <span>= $${subtotal.toFixed(2)}</span>
+        <button onclick="quitarCarrito(${id})" style="margin-left:10px;">X</button>
+      `;
       carritoItems.appendChild(item);
     }
     totalEl.textContent = total.toFixed(2);
@@ -66,4 +71,12 @@ const productos = [
   }
   
   renderCatalogo();
+
+  function cambiarCantidad(id, nuevaCantidad) {
+    const cantidad = parseInt(nuevaCantidad);
+    if (cantidad <= 0 || isNaN(cantidad)) return;
+    carrito[id] = cantidad;
+    actualizarCarrito();
+  }
+  
   
