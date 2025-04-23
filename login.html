@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Iniciar Sesión</h2>
+    <form onsubmit="login(event)">
+      <input type="text" id="loginUser" placeholder="Usuario" required>
+      <input type="password" id="loginPass" placeholder="Contraseña" required>
+      <button type="submit">Entrar</button>
+    </form>
+    <p>¿No tienes cuenta? <a href="register.html">Regístrate</a></p>
+  </div>
+</body>
+<script>
+function login(e) {
+  e.preventDefault();
+  const user = localStorage.getItem('user');
+  const pass = localStorage.getItem('pass');
+  if (user === document.getElementById('loginUser').value &&
+      pass === document.getElementById('loginPass').value) {
+    window.location.href = "index.html";
+  } else {
+    alert("Usuario o contraseña incorrectos");
+  }
+}
+</script>
+</html>
