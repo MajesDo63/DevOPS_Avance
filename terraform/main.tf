@@ -295,6 +295,6 @@ output "s3_bucket_name" {
 }
 
 output "web_instance_ips" {
-  description = "IPs públicas de las instancias web"
+  description = "IPs públicas de las instancias web."
   value       = aws_instance.web[*].public_ip
 }
