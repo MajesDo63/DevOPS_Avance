@@ -1,5 +1,3 @@
-# main.tf
-
 terraform {
   required_providers {
     aws = {
@@ -93,7 +91,7 @@ resource "aws_route_table_association" "public_assoc_2" {
 }
 
 # --------------------------------------------------
-# 2. SECURITY GROUPS (ASCII-only descriptions)
+# 2. SECURITY GROUPS
 # --------------------------------------------------
 
 resource "aws_security_group" "web_sg" {
@@ -240,15 +238,15 @@ resource "aws_db_subnet_group" "aurora_sg" {
 }
 
 resource "aws_rds_cluster" "aurora" {
-  cluster_identifier = "thedungeonshelf-aurora"
-  engine             = "aurora-mysql"
-  engine_version     = "8.0.mysql_aurora.3.02.0"
-  engine_mode        = "provisioned"
-  database_name      = "appdb"
-  master_username    = "admin"
-  master_password    = "Nicooa6652"
-  db_subnet_group_name   = aws_db_subnet_group.aurora_sg.name
-  vpc_security_group_ids = [aws_security_group.db_sg.id]
+  cluster_identifier        = "thedungeonshelf-aurora"
+  engine                    = "aurora-mysql"
+  engine_version            = "8.0.mysql_aurora.3.08.2"
+  engine_mode               = "provisioned"
+  database_name             = "appdb"
+  master_username           = "admin"
+  master_password           = "Nicooa6652"
+  db_subnet_group_name      = aws_db_subnet_group.aurora_sg.name
+  vpc_security_group_ids    = [aws_security_group.db_sg.id]
 
   serverlessv2_scaling_configuration {
     min_capacity = 0.5
@@ -260,20 +258,15 @@ resource "aws_rds_cluster" "aurora" {
 }
 
 resource "aws_rds_cluster_instance" "aurora_instance" {
-  identifier         = "thedungeonshelf-aurora-1"
-  cluster_identifier = aws_rds_cluster.aurora.id
+  identifier            = "thedungeonshelf-aurora-1"
+  cluster_identifier    = aws_rds_cluster.aurora.id
+  instance_class        = "db.serverless"
+  engine                = aws_rds_cluster.aurora.engine
+  engine_version        = aws_rds_cluster.aurora.engine_version
+  publicly_accessible   = false
 
-  instance_class     = "db.serverless"
-  engine             = aws_rds_cluster.aurora.engine
-  engine_version     = aws_rds_cluster.aurora.engine_version
-
-  publicly_accessible = false
-
-  tags = {
-    Name = "AuroraInstanceV2"
-  }
+  tags = { Name = "AuroraInstanceV2" }
 }
-
 
 # --------------------------------------------------
 # 6. OUTPUTS
