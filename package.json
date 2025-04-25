@@ -1,0 +1,12 @@
+{
+    "name": "tienda-panini",
+    "version": "1.0.0",
+    "description": "Tienda web de cómics con carrito y registro",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js"
+    },
+    "dependencies": {
+      "express": "^4.18.2"
+    }
+  }
